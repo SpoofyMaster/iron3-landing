@@ -6,6 +6,9 @@ import { DeviceCompatibility } from "@/components/sections/DeviceCompatibility";
 import { StatementValue } from "@/components/sections/StatementValue";
 import { Methodology } from "@/components/sections/Methodology";
 import { CoachEcosystem } from "@/components/sections/CoachEcosystem";
+import { Community } from "@/components/sections/Community";
+import { Pricing } from "@/components/sections/Pricing";
+import { FAQ } from "@/components/sections/FAQ";
 import { BrandFilm } from "@/components/sections/BrandFilm";
 import { FinalCta } from "@/components/sections/FinalCta";
 
@@ -20,6 +23,9 @@ export default function Home() {
         <StatementValue />
         <Methodology />
         <CoachEcosystem />
+        <Community />
+        <Pricing />
+        <FAQ />
         <BrandFilm />
         <FinalCta />
       </main>
