@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -7,18 +8,24 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 const blocks = [
   {
     title: "Plan the season",
-    subtitle: "Annual calendar & event discovery",
+    subtitle: "44 races worldwide — find your next start line",
     id: "calendar",
+    screenshot: "/images/screenshots/race-calendar.jpg",
+    alt: "IRON3 Race Calendar showing upcoming IRONMAN events worldwide",
   },
   {
     title: "Train with purpose",
-    subtitle: "Prepare for what’s next",
+    subtitle: "Brick sessions, effort tracking, workout logging",
     id: "prep",
+    screenshot: "/images/screenshots/brick-session.jpg",
+    alt: "IRON3 Brick Session screen with swim, bike, run, and brick workout options",
   },
   {
     title: "Track what matters",
-    subtitle: "Session intelligence, split by split",
+    subtitle: "Discipline balance, monthly stats, personal bests",
     id: "track",
+    screenshot: "/images/screenshots/performance-stats.jpg",
+    alt: "IRON3 Performance Stats showing discipline balance and monthly summary",
   },
 ] as const;
 
@@ -69,7 +76,14 @@ export function AppShowcase() {
               </p>
               <div className="order-1 w-full lg:order-2">
                 <PhoneFrame index={i}>
-                  <ScreenContent variant={b.id} />
+                  <Image
+                    src={b.screenshot}
+                    alt={b.alt}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 85vw, 240px"
+                    quality={90}
+                  />
                 </PhoneFrame>
               </div>
             </motion.div>
@@ -77,123 +91,5 @@ export function AppShowcase() {
         </div>
       </div>
     </section>
-  );
-}
-
-function ScreenContent({ variant }: { variant: string }) {
-  if (variant === "calendar") return <ScreenCalendar />;
-  if (variant === "prep") return <ScreenPrep />;
-  return <ScreenTrack />;
-}
-
-function ScreenCalendar() {
-  return (
-    <div className="flex h-full flex-col bg-gradient-to-b from-[#12141a] to-iron-carbon p-4 text-iron-off-white">
-      <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.2em] text-iron-muted">
-        <span>2026 Season</span>
-        <span className="text-iron-red">Live</span>
-      </div>
-      <div className="mt-4 grid grid-cols-7 gap-1 text-center text-[0.55rem] text-iron-muted">
-        {["M", "T", "W", "T", "F", "S", "S"].map((d) => (
-          <span key={d} className="opacity-60">
-            {d}
-          </span>
-        ))}
-      </div>
-      <div className="mt-2 grid flex-1 grid-cols-7 gap-1 text-[0.5rem]">
-        {Array.from({ length: 28 }).map((_, i) => {
-          const h = i % 5 === 0 ? "bg-iron-red/25" : i % 3 === 0 ? "bg-white/5" : "bg-transparent";
-          return (
-            <div
-              key={i}
-              className={`flex aspect-square items-center justify-center rounded-sm ${h} ring-1 ring-white/5`}
-            >
-              {i === 14 ? <span className="text-[0.45rem] text-iron-red">A‑Race</span> : null}
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-3 rounded-lg border border-white/8 bg-white/[0.03] p-2">
-        <p className="text-[0.55rem] uppercase tracking-[0.18em] text-iron-muted">Next — Event</p>
-        <p className="mt-1 text-xs font-semibold">Ironman · 8 months out</p>
-      </div>
-    </div>
-  );
-}
-
-function ScreenPrep() {
-  return (
-    <div className="flex h-full flex-col bg-gradient-to-b from-[#15161c] to-iron-carbon p-4 text-iron-off-white">
-      <p className="text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-iron-muted">
-        Today
-      </p>
-      <div className="mt-6 flex flex-col items-center">
-        <div className="relative h-28 w-28 rounded-full border-4 border-white/10">
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background:
-                "conic-gradient(var(--iron-red) 72%, rgba(255,255,255,0.06) 0)",
-              mask: "radial-gradient(farthest-side, transparent calc(100% - 10px), #000 0)",
-            }}
-          />
-          <div className="absolute inset-0 flex items-center justify-center font-display text-2xl tracking-widest">
-            72%
-          </div>
-        </div>
-        <p className="mt-4 text-center text-xs text-iron-light-gray">Base phase · week 6</p>
-      </div>
-      <div className="mt-auto space-y-2">
-        <div className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2">
-          <p className="text-[0.55rem] uppercase tracking-[0.2em] text-iron-muted">Next workout</p>
-          <p className="text-sm font-semibold">Bike · Sweet spot intervals</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ScreenTrack() {
-  return (
-    <div className="flex h-full flex-col bg-gradient-to-b from-[#121319] to-iron-carbon p-4 text-iron-off-white">
-      <div className="flex items-baseline justify-between">
-        <p className="text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-iron-muted">
-          Last session
-        </p>
-        <span className="text-[0.55rem] text-iron-red">Saved</span>
-      </div>
-      <div className="mt-4 space-y-2">
-        {[
-          { d: "Swim", v: "3.8k", b: "62% zone 3" },
-          { d: "Bike", v: "90 min", b: "IF 0.85" },
-          { d: "Run", v: "12 km", b: "Neg split" },
-        ].map((row) => (
-          <div
-            key={row.d}
-            className="flex items-center justify-between rounded-md border border-white/8 bg-white/[0.03] px-2 py-1.5"
-          >
-            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.15em]">
-              {row.d}
-            </span>
-            <span className="text-xs text-iron-light-gray">{row.v}</span>
-            <span className="text-[0.55rem] text-iron-muted">{row.b}</span>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 flex flex-1 flex-col justify-end">
-        <div className="h-16 w-full rounded-md bg-gradient-to-t from-iron-red/35 to-transparent ring-1 ring-white/10">
-          <div className="flex h-full items-end gap-0.5 px-1 pb-1">
-            {Array.from({ length: 24 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex-1 rounded-sm bg-white/35"
-                style={{ height: `${20 + (i * 17) % 55}%` }}
-              />
-            ))}
-          </div>
-        </div>
-        <p className="mt-2 text-center text-[0.55rem] text-iron-muted">Load · fatigue · readiness</p>
-      </div>
-    </div>
   );
 }

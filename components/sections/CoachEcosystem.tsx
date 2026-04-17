@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -60,20 +61,14 @@ export function CoachEcosystem() {
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
               <PhoneFrame index={1}>
-                <div className="flex h-full flex-col bg-gradient-to-b from-iron-charcoal to-iron-carbon p-4">
-                  <p className="text-[0.55rem] font-semibold uppercase tracking-[0.28em] text-iron-muted">
-                    IRON3
-                  </p>
-                  <div className="mt-6 flex flex-1 flex-col items-center justify-center gap-2">
-                    <div className="h-16 w-16 rounded-full border border-iron-red/50 bg-iron-red/15 shadow-[0_0_40px_rgba(193,18,31,0.25)]" />
-                    <p className="text-center text-xs text-iron-light-gray">Unified readiness view</p>
-                  </div>
-                  <div className="grid grid-cols-3 gap-1 text-center text-[0.5rem] uppercase tracking-[0.15em] text-iron-muted">
-                    <span>S</span>
-                    <span>B</span>
-                    <span>R</span>
-                  </div>
-                </div>
+                <Image
+                  src="/images/screenshots/leaderboard.jpg"
+                  alt="IRON3 Global Leaderboard showing friends, global, and local rankings"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 88vw, 280px"
+                  quality={90}
+                />
               </PhoneFrame>
             </motion.div>
           </div>
