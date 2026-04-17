@@ -4,17 +4,19 @@ type PhoneFrameProps = {
   children: React.ReactNode;
   className?: string;
   index?: number;
+  /** When true, skip the default rotation/translate — caller controls positioning */
+  bare?: boolean;
 };
 
-export function PhoneFrame({ children, className, index = 0 }: PhoneFrameProps) {
+export function PhoneFrame({ children, className, index = 0, bare = false }: PhoneFrameProps) {
   const rotations = ["rotate-[-6deg]", "rotate-0", "rotate-[5deg]"];
   const y = ["translate-y-4", "translate-y-0", "translate-y-6"];
   return (
     <div
       className={cn(
         "relative mx-auto w-[min(85vw,240px)] shrink-0",
-        rotations[index % 3],
-        y[index % 3],
+        !bare && rotations[index % 3],
+        !bare && y[index % 3],
         className,
       )}
     >
