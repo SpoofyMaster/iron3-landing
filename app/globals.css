@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  --iron-red: #c1121f;
+  --iron-carbon: #0b0b0d;
+  --iron-charcoal: #17181c;
+  --iron-sand: #e8ddcf;
+  --iron-off-white: #f7f5f1;
+  --iron-light-gray: #e5e5e7;
+  --iron-muted: #9a9ca3;
+  --iron-brown: #45372f;
+  --background: var(--iron-carbon);
+  --foreground: var(--iron-off-white);
+}
+
+@theme inline {
+  --color-iron-red: var(--iron-red);
+  --color-iron-carbon: var(--iron-carbon);
+  --color-iron-charcoal: var(--iron-charcoal);
+  --color-iron-sand: var(--iron-sand);
+  --color-iron-off-white: var(--iron-off-white);
+  --color-iron-light-gray: var(--iron-light-gray);
+  --color-iron-muted: var(--iron-muted);
+  --color-iron-brown: var(--iron-brown);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-bebas);
+  --font-accent: var(--font-instrument);
+  --spacing-section: clamp(4rem, 10vw, 8rem);
+  --spacing-section-lg: clamp(5rem, 12vw, 10rem);
+}
+
+.font-display {
+  font-family: var(--font-bebas), "Bebas Neue", system-ui, sans-serif;
+}
+
+.font-accent {
+  font-family: var(--font-instrument), "Instrument Serif", ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--iron-carbon);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--iron-red) 55%, transparent);
+  color: var(--iron-off-white);
+}
+
+.grain-overlay {
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Editorial long-form pages */
+.prose-iron {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: color-mix(in oklab, var(--iron-light-gray) 92%, transparent);
+}
+
+.prose-iron h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-bebas), system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  letter-spacing: 0.06em;
+  color: var(--iron-off-white);
+}
+
+.prose-iron p {
+  margin-bottom: 1.25rem;
+}
+
+.prose-iron ul {
+  margin: 1.25rem 0 1.5rem 1.25rem;
+  list-style: disc;
+}
+
+.prose-iron li {
+  margin-bottom: 0.5rem;
+}
