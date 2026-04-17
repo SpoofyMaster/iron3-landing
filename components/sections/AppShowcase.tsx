@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { IPhoneFrame } from "@/components/ui/IPhoneFrame";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const INTERVAL_MS = 4000;
@@ -10,24 +11,24 @@ const INTERVAL_MS = 4000;
 const blocks = [
   {
     title: "Plan the season",
-    subtitle: "44 races worldwide — find your next start line",
+    subtitle: "171 events worldwide — find your next start line",
     id: "calendar",
     screenshot: "/images/screenshots/race-calendar.jpg",
     alt: "IRON3 Race Calendar showing upcoming IRONMAN events worldwide",
   },
   {
     title: "Train with purpose",
-    subtitle: "Brick sessions, effort tracking, workout logging",
+    subtitle: "Weekly plans, discipline tracking, structured preparation",
     id: "prep",
-    screenshot: "/images/screenshots/brick-session.jpg",
-    alt: "IRON3 Brick Session screen with swim, bike, run, and brick workout options",
+    screenshot: "/images/screenshots/prep-plan.jpg",
+    alt: "IRON3 PREP Plan showing weekly training schedule with swim, bike, run",
   },
   {
-    title: "Track what matters",
-    subtitle: "Discipline balance, monthly stats, personal bests",
-    id: "track",
-    screenshot: "/images/screenshots/performance-stats.jpg",
-    alt: "IRON3 Performance Stats showing discipline balance and monthly summary",
+    title: "Log every session",
+    subtitle: "Duration, distance, effort, workout type — all in one tap",
+    id: "log",
+    screenshot: "/images/screenshots/swim-log.jpg",
+    alt: "IRON3 Swim session logging with duration, distance, and effort tracking",
   },
 ] as const;
 
@@ -38,30 +39,31 @@ function getPosition(index: number, active: number, total: number) {
   return "left";
 }
 
+/* Desktop: 3 phones with generous spacing */
 const positionVariants = {
   center: {
     x: 0,
-    scale: 1,
+    scale: 1.05,
     rotateY: 0,
     zIndex: 30,
     opacity: 1,
     filter: "brightness(1)",
   },
   left: {
-    x: "-60%",
-    scale: 0.75,
-    rotateY: 15,
+    x: "-110%",
+    scale: 0.85,
+    rotateY: 18,
     zIndex: 10,
-    opacity: 0.6,
-    filter: "brightness(0.55)",
+    opacity: 0.55,
+    filter: "brightness(0.5)",
   },
   right: {
-    x: "60%",
-    scale: 0.75,
-    rotateY: -15,
+    x: "110%",
+    scale: 0.85,
+    rotateY: -18,
     zIndex: 10,
-    opacity: 0.6,
-    filter: "brightness(0.55)",
+    opacity: 0.55,
+    filter: "brightness(0.5)",
   },
 };
 
@@ -101,7 +103,10 @@ export function AppShowcase() {
       id="showcase"
       className="relative overflow-hidden bg-iron-carbon py-[var(--spacing-section-lg)]"
     >
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
+      {/* Subtle radial glow behind carousel */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(193,18,31,0.05),transparent_65%)]" />
+
+      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
         {/* Header */}
         <motion.div
           initial={reduced ? false : { opacity: 0, y: 24 }}
@@ -122,22 +127,22 @@ export function AppShowcase() {
           </p>
         </motion.div>
 
-        {/* ─── Desktop carousel (3 images visible) ─── */}
+        {/* ─── Desktop carousel (3 iPhones with spacing) ─── */}
         <div
           className="relative mx-auto mt-16 hidden lg:mt-20 lg:block"
-          style={{ perspective: "1400px", height: "640px" }}
+          style={{ perspective: "1600px", height: "620px" }}
         >
-          <div className="relative mx-auto h-full w-full max-w-[900px]">
+          <div className="relative mx-auto h-full w-full max-w-[960px]">
             {blocks.map((b, i) => {
               const pos = getPosition(i, active, blocks.length);
               return (
                 <motion.div
                   key={b.id}
-                  className="absolute left-1/2 top-0 w-[380px] cursor-pointer"
-                  style={{ marginLeft: "-190px" }}
+                  className="absolute left-1/2 top-0 cursor-pointer"
+                  style={{ marginLeft: "-130px", width: "260px" }}
                   animate={positionVariants[pos]}
                   transition={{
-                    duration: 0.7,
+                    duration: 0.75,
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   onClick={() => goTo(i)}
@@ -148,27 +153,26 @@ export function AppShowcase() {
                     if (e.key === "Enter" || e.key === " ") goTo(i);
                   }}
                 >
-                  <div className="relative overflow-hidden rounded-2xl shadow-[0_30px_80px_-15px_rgba(0,0,0,0.7)]">
+                  <IPhoneFrame className="w-full">
                     <Image
                       src={b.screenshot}
                       alt={b.alt}
-                      width={760}
-                      height={960}
-                      className="block w-full h-auto"
-                      sizes="(max-width: 1024px) 50vw, 380px"
+                      fill
+                      className="object-cover object-top"
+                      sizes="260px"
                       quality={100}
                       priority={i === 0}
                       unoptimized
                     />
-                  </div>
+                  </IPhoneFrame>
                 </motion.div>
               );
             })}
           </div>
         </div>
 
-        {/* ─── Mobile carousel (1 image, fade) ─── */}
-        <div className="relative mx-auto mt-10 flex min-h-[420px] items-center justify-center lg:hidden">
+        {/* ─── Mobile carousel (1 iPhone, fade) ─── */}
+        <div className="relative mx-auto mt-10 flex min-h-[500px] items-center justify-center lg:hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -177,26 +181,25 @@ export function AppShowcase() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="w-[min(85vw,320px)]"
+              className="w-[min(72vw,260px)]"
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.6)]">
+              <IPhoneFrame className="w-full">
                 <Image
                   src={currentBlock.screenshot}
                   alt={currentBlock.alt}
-                  width={760}
-                  height={960}
-                  className="block w-full h-auto"
-                  sizes="85vw"
+                  fill
+                  className="object-cover object-top"
+                  sizes="72vw"
                   quality={100}
                   unoptimized
                 />
-              </div>
+              </IPhoneFrame>
             </motion.div>
           </AnimatePresence>
         </div>
 
         {/* ─── Caption + dots ─── */}
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -208,12 +211,14 @@ export function AppShowcase() {
               <span className="block font-display text-2xl tracking-[0.08em] text-iron-off-white">
                 {currentBlock.title}
               </span>
-              <span className="mt-2 block text-sm text-iron-light-gray/70">{currentBlock.subtitle}</span>
+              <span className="mt-2 block text-sm text-iron-light-gray/70">
+                {currentBlock.subtitle}
+              </span>
             </motion.div>
           </AnimatePresence>
 
           {/* Progress dots */}
-          <div className="mt-6 flex items-center justify-center gap-2">
+          <div className="mt-6 flex items-center justify-center gap-2.5">
             {blocks.map((b, i) => (
               <button
                 key={b.id}
