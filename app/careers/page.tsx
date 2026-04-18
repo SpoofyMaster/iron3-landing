@@ -45,10 +45,14 @@ export default function CareersPage() {
         shipped, what you want to build next, and the race or project that taught you what endurance
         really costs.
       </p>
-      <h2>How to apply (placeholder)</h2>
+      <h2>How to apply</h2>
       <p>
-        Replace this paragraph with a recruiting email or ATS link. Until then, this page exists to
-        signal that IRON3 is a serious product organization with room for exceptional people.
+        Send a concise note to{" "}
+        <a href="mailto:contact@iron3.app" className="text-iron-red/90 hover:text-iron-red">
+          contact@iron3.app
+        </a>{" "}
+        — tell us what you have shipped, what you want to build next, and the race or project that
+        taught you what endurance really costs.
       </p>
     </SubpageShell>
   );
