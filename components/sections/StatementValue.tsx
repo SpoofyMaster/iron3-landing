@@ -1,12 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Marquee } from "@/components/ui/Marquee";
 import { Button } from "@/components/ui/Button";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function StatementValue() {
   const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const textScale = useTransform(scrollYProgress, [0.1, 0.4], [0.92, 1]);
+  const textOpacity = useTransform(scrollYProgress, [0.1, 0.35], [0, 1]);
+  const lineWidth = useTransform(scrollYProgress, [0.2, 0.5], ["0%", "100%"]);
 
   return (
     <section id="statement" className="relative bg-iron-charcoal text-iron-off-white">
@@ -52,24 +62,30 @@ export function StatementValue() {
         </>
       </Marquee>
 
-      <div className="relative overflow-hidden py-[var(--spacing-section-lg)]">
+      <div ref={sectionRef} className="relative overflow-hidden py-[var(--spacing-section-lg)]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(193,18,31,0.08),transparent_62%)]" />
         <div className="grain-overlay absolute inset-0 opacity-60" />
 
         <div className="relative mx-auto max-w-[720px] px-5 text-center sm:px-8">
           <motion.h2
-            initial={reduced ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            style={reduced ? {} : { scale: textScale, opacity: textOpacity }}
             className="font-display text-[clamp(2rem,5.5vw,3.75rem)] leading-[1.02] tracking-[0.03em]"
           >
-            PREPARE FOR MORE THAN A RACE. TRAIN FOR THE DAY THAT CHANGES YOU.
+            PREPARE FOR MORE THAN A RACE.{" "}
+            <span className="text-iron-red">TRAIN FOR THE DAY THAT CHANGES YOU.</span>
           </motion.h2>
+
+          {/* Animated divider line */}
+          <motion.div
+            style={reduced ? {} : { width: lineWidth }}
+            className="mx-auto mt-8 h-px bg-gradient-to-r from-transparent via-iron-red/60 to-transparent"
+          />
+
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.08 }}
+            transition={{ delay: 0.08, duration: 0.7 }}
             className="mt-8 text-lg leading-relaxed text-iron-light-gray/92"
           >
             The start line is not a moment — it is the edge of every early session, every hard

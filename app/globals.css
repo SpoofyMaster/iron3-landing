@@ -84,6 +84,34 @@ body {
   }
 }
 
+/* Smooth scroll snap for section flow */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  main > section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+  }
+}
+
+/* Video overlay shimmer for loading state */
+video:not([data-loaded]) {
+  background: linear-gradient(
+    110deg,
+    var(--iron-carbon) 30%,
+    var(--iron-charcoal) 50%,
+    var(--iron-carbon) 70%
+  );
+  background-size: 200% 100%;
+}
+
+/* Hover micro-interaction for interactive cards */
+.hover-lift {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
 /* Editorial long-form pages */
 .prose-iron {
   font-size: 1.0625rem;
