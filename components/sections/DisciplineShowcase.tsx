@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { SWIM_VIDEO_MP4, BIKE_VIDEO_MP4, RUN_VIDEO_MP4 } from "@/constants/media";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { RippleImage } from "@/components/three/RippleImage";
 
 const disciplines = [
   {
     id: "swim",
     label: "SWIM",
     stat: "Open Water",
-    video: SWIM_VIDEO_MP4,
+    image: "/images/discipline-swim.jpg",
     color: "#00B4D8",
     description: "Master the first discipline. Track pace, distance, and technique evolution.",
   },
@@ -18,7 +18,7 @@ const disciplines = [
     id: "bike",
     label: "BIKE",
     stat: "On the Road",
-    video: BIKE_VIDEO_MP4,
+    image: "/images/discipline-bike.jpg",
     color: "#80ED99",
     description: "Build power on every ride. Structured sessions that compound into race fitness.",
   },
@@ -26,7 +26,7 @@ const disciplines = [
     id: "run",
     label: "RUN",
     stat: "To the Line",
-    video: RUN_VIDEO_MP4,
+    image: "/images/discipline-run.jpg",
     color: "#FFB347",
     description: "Finish what you started. Every stride logged, every split measured.",
   },
@@ -63,28 +63,9 @@ function DisciplineCard({
     >
       {/* Video background */}
       <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-[3/4] overflow-hidden">
-        {!reduced ? (
-          <motion.div style={{ y }} className="absolute inset-[-20%]">
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-hidden
-            >
-              <source src={discipline.video} type="video/mp4" />
-            </video>
-          </motion.div>
-        ) : (
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(135deg, ${discipline.color}22, var(--iron-carbon))`,
-            }}
-          />
-        )}
+        <motion.div style={reduced ? undefined : { y }} className="absolute inset-[-8%]">
+          <RippleImage src={discipline.image} alt={`${discipline.label} — cinematic discipline photograph`} />
+        </motion.div>
 
         {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-iron-carbon via-iron-carbon/40 to-transparent" />

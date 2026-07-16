@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 type ButtonProps = {
   href?: string;
@@ -33,14 +34,18 @@ export function Button({
   const cls = cn(base, variants[variant], className);
   if (href) {
     return (
-      <Link href={href} className={cls}>
-        {children}
-      </Link>
+      <Magnetic>
+        <Link href={href} className={cls}>
+          {children}
+        </Link>
+      </Magnetic>
     );
   }
   return (
-    <button type={type} onClick={onClick} className={cls}>
-      {children}
-    </button>
+    <Magnetic>
+      <button type={type} onClick={onClick} className={cls}>
+        {children}
+      </button>
+    </Magnetic>
   );
 }

@@ -2,10 +2,10 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { HERO_VIDEO_MP4 } from "@/constants/media";
 import { AppStoreBadges } from "@/components/ui/AppStoreBadges";
 import { Button } from "@/components/ui/Button";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { HeroCanvas } from "@/components/three/HeroCanvas";
 
 const headline = [
   { t: "YOUR SEASON.", italic: false },
@@ -23,7 +23,7 @@ export function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
   const videoScale = useTransform(scrollYProgress, [0, 0.5], [1.05, 1.2]);
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.6], [0.65, 0.2]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.6], [0.9, 0.25]);
 
   return (
     <section
@@ -33,27 +33,20 @@ export function Hero() {
     >
       {/* Video background with parallax zoom */}
       <div className="absolute inset-0 bg-iron-carbon">
-        {!reduced ? (
-          <motion.div style={{ scale: videoScale, opacity: videoOpacity }} className="h-full w-full">
-            <video
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster=""
-              aria-hidden
-            >
-              <source src={HERO_VIDEO_MP4} type="video/mp4" />
-            </video>
-          </motion.div>
-        ) : (
-          <div
-            className="h-full w-full bg-gradient-to-br from-iron-charcoal via-iron-carbon to-[#1a0a0c]"
+        <motion.div
+          style={reduced ? undefined : { scale: videoScale, opacity: videoOpacity }}
+          className="h-full w-full"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hero-dawn.jpg"
+            alt=""
+            className="h-full w-full object-cover object-[50%_35%]"
+            fetchPriority="high"
             aria-hidden
           />
-        )}
+        </motion.div>
+        <HeroCanvas />
         {/* Multi-layer gradient for depth */}
         <div
           className="absolute inset-0 bg-gradient-to-t from-iron-carbon via-iron-carbon/50 to-iron-carbon/15"

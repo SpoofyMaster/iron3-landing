@@ -1,4 +1,5 @@
 import { cn } from "@/lib/cn";
+import { Tilt3D } from "@/components/ui/Tilt3D";
 
 type IPhoneFrameProps = {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ type IPhoneFrameProps = {
 export function IPhoneFrame({ children, className }: IPhoneFrameProps) {
   return (
     <div className={cn("relative mx-auto shrink-0", className)}>
+      <Tilt3D>
       {/* Outer device shell */}
       <div className="relative w-full overflow-hidden rounded-[3rem] border-[3px] border-[#2a2a2e] bg-[#1a1a1d] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.06),inset_0_0_0_1px_rgba(255,255,255,0.04)]">
         {/* Side buttons — left */}
@@ -39,6 +41,7 @@ export function IPhoneFrame({ children, className }: IPhoneFrameProps) {
         style={{ background: "radial-gradient(ellipse at center, rgba(193,18,31,0.15), transparent 70%)" }}
         aria-hidden
       />
+      </Tilt3D>
     </div>
   );
 }

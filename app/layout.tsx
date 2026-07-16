@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, DM_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
 
 const bebas = Bebas_Neue({
   weight: "400",
@@ -57,7 +58,7 @@ export default function RootLayout({
       lang="en"
       className={`${bebas.variable} ${dmSans.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans"><SmoothScroll>{children}</SmoothScroll></body>
     </html>
   );
 }
