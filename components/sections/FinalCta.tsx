@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { AppStoreBadges } from "@/components/ui/AppStoreBadges";
 import { Button } from "@/components/ui/Button";
-import { SILHOUETTE_VIDEO_MP4 } from "@/constants/media";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function FinalCta() {
@@ -14,7 +13,7 @@ export function FinalCta() {
       id="download"
       className="relative overflow-hidden bg-iron-carbon py-[var(--spacing-section-lg)] text-iron-off-white"
     >
-      {/* Background video — silhouette athlete at sunset */}
+      {/* Background video — the campaign hero loop, dimmed */}
       <div className="absolute inset-0">
         {!reduced ? (
           <video
@@ -24,9 +23,10 @@ export function FinalCta() {
             loop
             playsInline
             preload="metadata"
+            poster="/images/hero-dawn.jpg"
             aria-hidden
           >
-            <source src={SILHOUETTE_VIDEO_MP4} type="video/mp4" />
+            <source src="/video/hero-loop.mp4" type="video/mp4" />
           </video>
         ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-iron-carbon via-iron-carbon/60 to-iron-carbon/40" />
