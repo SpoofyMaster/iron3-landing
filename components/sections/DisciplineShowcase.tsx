@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { RippleImage } from "@/components/three/RippleImage";
 
 const disciplines = [
   {
@@ -11,6 +10,7 @@ const disciplines = [
     label: "SWIM",
     stat: "Open Water",
     image: "/images/discipline-swim.jpg",
+    video: "/video/swim-loop.mp4",
     color: "#00B4D8",
     description: "Master the first discipline. Track pace, distance, and technique evolution.",
   },
@@ -19,6 +19,7 @@ const disciplines = [
     label: "BIKE",
     stat: "On the Road",
     image: "/images/discipline-bike.jpg",
+    video: "/video/bike-loop.mp4",
     color: "#80ED99",
     description: "Build power on every ride. Structured sessions that compound into race fitness.",
   },
@@ -27,6 +28,7 @@ const disciplines = [
     label: "RUN",
     stat: "To the Line",
     image: "/images/discipline-run.jpg",
+    video: "/video/run-loop.mp4",
     color: "#FFB347",
     description: "Finish what you started. Every stride logged, every split measured.",
   },
@@ -64,7 +66,28 @@ function DisciplineCard({
       {/* Video background */}
       <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-[3/4] overflow-hidden">
         <motion.div style={reduced ? undefined : { y }} className="absolute inset-[-8%]">
-          <RippleImage src={discipline.image} alt={`${discipline.label} — cinematic discipline photograph`} />
+          {!reduced ? (
+            <video
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={discipline.image}
+              aria-hidden
+            >
+              <source src={discipline.video} type="video/mp4" />
+            </video>
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={discipline.image}
+              alt={`${discipline.label} — cinematic discipline photograph`}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          )}
         </motion.div>
 
         {/* Gradient overlays */}

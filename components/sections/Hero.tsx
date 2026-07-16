@@ -37,14 +37,28 @@ export function Hero() {
           style={reduced ? undefined : { scale: videoScale, opacity: videoOpacity }}
           className="h-full w-full"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/hero-dawn.jpg"
-            alt=""
-            className="h-full w-full object-cover object-[50%_35%]"
-            fetchPriority="high"
-            aria-hidden
-          />
+          {!reduced ? (
+            <video
+              className="h-full w-full object-cover object-[50%_35%]"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/images/hero-dawn.jpg"
+              aria-hidden
+            >
+              <source src="/video/hero-loop.mp4" type="video/mp4" />
+            </video>
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src="/images/hero-dawn.jpg"
+              alt=""
+              className="h-full w-full object-cover object-[50%_35%]"
+              aria-hidden
+            />
+          )}
         </motion.div>
         <HeroCanvas />
         {/* Multi-layer gradient for depth */}
